@@ -78,6 +78,22 @@
         </nav>
 
         <main class="py-4">
+            @isset($message_sucess)
+            <div class="container">
+                <div class="alert alert-success" role="alert">
+                    {!! $message_sucess !!}
+                </div>
+            </div>
+            @endisset
+
+            @isset($message_warning)
+            <div class="container">
+                <div class="alert alert-warning" role="alert">
+                    {!! $message_warning !!}
+                </div>
+            </div>
+            @endisset
+
             <!-- Hien thi dong bao loi - copy tu getbootrap.com-->
             @if($errors->any())
             <div class="container">

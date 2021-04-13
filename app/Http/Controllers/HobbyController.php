@@ -106,7 +106,7 @@ class HobbyController extends Controller
         
         return $this->index()->with(
             [
-                'message_sucess' => "The hobby <b>" . $hobby->name . "</b> was updated."
+                'message_success' => "The hobby <b>" . $hobby->name . "</b> was updated."
             ]
         );
     }
@@ -119,6 +119,10 @@ class HobbyController extends Controller
      */
     public function destroy(Hobby $hobby)
     {
-        //
+        $oldName = $hobby->name;
+        $hobby->delete();
+        return $this->index()->with([
+            'message_success' => "The hobby <b>" . $hobby->name . "</b> was deleted."
+        ]);
     }
 }

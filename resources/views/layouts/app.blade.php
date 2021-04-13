@@ -78,10 +78,10 @@
         </nav>
 
         <main class="py-4">
-            @isset($message_sucess)
+            @isset($message_success)
             <div class="container">
                 <div class="alert alert-success" role="alert">
-                    {!! $message_sucess !!}
+                    {!! $message_success !!}
                 </div>
             </div>
             @endisset

@@ -14,8 +14,8 @@ class TagSeeder extends Seeder
     public function run()
     {
         $tags = [
-            //'Sports' => 'primary', // blue
-            //'Relaxation' => 'secondary', // grey
+            'Sports' => 'primary', // blue
+            'Relaxation' => 'secondary', // grey
             'Fun' => 'warning', // yellow
             'Nature' => 'success', // green
             'Inspiration' => 'light', // white grey

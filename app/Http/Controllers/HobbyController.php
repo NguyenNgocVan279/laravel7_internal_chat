@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Hobby;
+use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HobbyController extends Controller
 {
@@ -63,7 +65,7 @@ class HobbyController extends Controller
         $hobby->save();
         return $this->index()->with(
             [
-                'message_sucess' => "The hobby <b>" . $hobby->name . "</b> was created."
+                'message_success' => "The hobby <b>" . $hobby->name . "</b> was created."
             ]
         );
     }
@@ -76,8 +78,13 @@ class HobbyController extends Controller
      */
     public function show(Hobby $hobby)
     {
+        $allTags = Tag::all();
+        $usedTags = $hobby->tags;
+        $availableTags = $allTags->diff($usedTags);
         return view('hobby.show')->with([
-            'hobby' => $hobby
+            'hobby' => $hobby,
+            'availableTags' =>$availableTags,
+            'message_success' => Session::get('message_success')
         ]);
     }
 

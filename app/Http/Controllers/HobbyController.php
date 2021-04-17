@@ -6,6 +6,7 @@ use App\Hobby;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class HobbyController extends Controller
 {
@@ -123,8 +124,17 @@ class HobbyController extends Controller
         $request->validate([
             'name' => 'required|min:3',
             'description' => 'required|min:5',
-            'image' => 'mimes:jpeg,jpg,bmp,png,gif|max:5000|dimensions:max_width:200,min_height:100',
+            'image' => 'mimes:jpeg,jpg,bmp,png,gif',
         ]);
+
+        if ($request->image) {
+            $image = Image::make($request->image);
+            if( $image->width() > $image->height()) {
+                dd("landscape");
+            } else {
+                dd("portrait");
+            }
+        }
 
 
         $hobby->update([

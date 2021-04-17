@@ -55,9 +55,9 @@ class HobbyController extends Controller
         $request->validate([
             'name' => 'required|min:3',
             'description' => 'required|min:5',
+            'image' => 'mimes:jpeg,jpg,bmp,png,gif',
         ]);
-
-
+        
         $hobby= new Hobby([
             'name' => $request['name'],
             'description' => $request['description'], 
@@ -65,6 +65,11 @@ class HobbyController extends Controller
         ]);
         
         $hobby->save();
+
+        if ($request->image) {
+            $this->saveImages($request->image, $hobby->id);
+        }
+
 
         /* return $this->index()->with(
             [
@@ -128,30 +133,7 @@ class HobbyController extends Controller
         ]);
 
         if ($request->image) {
-            $image = Image::make($request->image);
-            if( $image->width() > $image->height()) { //Landscape picture                
-                // Tạo ảnh lớn và ảnh pixelated
-                $image->widen(1200)
-                    ->save(public_path() . "/img/hobbies/" . $hobby->id . "_large.jpg")
-                    ->widen(400)->pixelate(12)
-                    ->save(public_path() . "/img/hobbies/" . $hobby->id . "_pixelated.jpg");
-                
-                // Tạo ảnh thumbnail
-                $image = Image::make($request->image);
-                $image->widen(60)
-                    ->save(public_path() . "/img/hobbies/" . $hobby->id . "_thumb.jpg");
-          
-            } else { //portrait picture
-                $image->heighten(900)
-                ->save(public_path() . "/img/hobbies/" . $hobby->id . "_large.jpg")
-                ->heighten(400)->pixelate(12)
-                ->save(public_path() . "/img/hobbies/" . $hobby->id . "_pixelated.jpg");
-            
-            // Tạo ảnh thumbnail
-            $image = Image::make($request->image);
-            $image->heighten(60)
-                ->save(public_path() . "/img/hobbies/" . $hobby->id . "_thumb.jpg");
-            }
+            $this->saveImages($request->image, $hobby->id);
         }
 
 
@@ -180,5 +162,35 @@ class HobbyController extends Controller
         return $this->index()->with([
             'message_success' => "The hobby <b>" . $hobby->name . "</b> was deleted."
         ]);
+    }
+    
+    //Hàm save hình ảnh
+    public function saveImages($imageInput, $hobby_id) {
+
+        $image = Image::make($imageInput);
+        if( $image->width() > $image->height()) { //Landscape picture                
+            // Tạo ảnh lớn và ảnh pixelated
+            $image->widen(1200)
+                ->save(public_path() . "/img/hobbies/" . $hobby_id . "_large.jpg")
+                ->widen(400)->pixelate(12)
+                ->save(public_path() . "/img/hobbies/" . $hobby_id . "_pixelated.jpg");
+            
+            // Tạo ảnh thumbnail
+            $image = Image::make($imageInput);
+            $image->widen(60)
+                ->save(public_path() . "/img/hobbies/" . $hobby_id . "_thumb.jpg");
+        
+        } else { //portrait picture
+            $image->heighten(900)
+            ->save(public_path() . "/img/hobbies/" . $hobby_id . "_large.jpg")
+            ->heighten(400)->pixelate(12)
+            ->save(public_path() . "/img/hobbies/" . $hobby_id . "_pixelated.jpg");
+        
+        // Tạo ảnh thumbnail
+        $image = Image::make($imageInput);
+        $image->heighten(60)
+            ->save(public_path() . "/img/hobbies/" . $hobby_id . "_thumb.jpg");
+        }
+
     }
 }

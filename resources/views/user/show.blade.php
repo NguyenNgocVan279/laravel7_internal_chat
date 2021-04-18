@@ -39,7 +39,13 @@
                                 @endif
                             </div>
                             <div class="col-md-3">
-                                <img class="img-thumbnail" src="/img/300x400.jpg" alt="{{ $user->name }}">
+                                <!--<img class="img-thumbnail" src="/img/300x400.jpg" alt="{{ $user->name }}">-->
+                                @if(Auth::user() && file_exists('img/users/' . $user->id . '_large.jpg')) <!-- Note: Không có "/" trước img -->                                    
+                                    <img class="img-fluid" src="/img/users/{{$user->id}}_large.jpg" alt="">                               
+                                @endif
+                                @if(!Auth::user() && file_exists('img/users/' . $user->id . '_pixelated.jpg'))
+                                    <img class="img-fluid" src="/img/users/{{$user->id}}_pixelated.jpg" alt="">                                    
+                                @endif          
                             </div>
                         </div>
 

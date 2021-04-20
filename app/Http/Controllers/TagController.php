@@ -9,6 +9,7 @@ class TagController extends Controller
 {
     public function __construct(){
         $this->middleware('auth')->except(['index']);
+        $this->middleware('admin')->except(['index']); // Những user không phải admin chỉ thực hiện được hàm index trong tất cả các hàm dưới đây.
     }
 
 

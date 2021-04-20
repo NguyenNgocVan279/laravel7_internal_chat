@@ -10,6 +10,14 @@ class HobbyPolicy
 {
     use HandlesAuthorization;
 
+
+    // Hàm before sẽ ghi đè tất cả những gì được định nghĩa trong các hàm dưới đó, có nghĩa admin sẽ làm được tất cả mọi thứ!
+    public function before($user, $ability) {
+        if ($user->role === 'admin') {
+            return true; 
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -53,7 +61,7 @@ class HobbyPolicy
      */
     public function update(User $user, Hobby $hobby)
     {
-        //
+        return $user->id === $hobby->user_id; // nếu true thì có thể update, nếu false thì không thể!
     }
 
     /**
@@ -65,7 +73,7 @@ class HobbyPolicy
      */
     public function delete(User $user, Hobby $hobby)
     {
-        //
+        return $user->id === $hobby->user_id; // nếu true thì có thể delete, nếu false thì không thể!
     }
 
     /**

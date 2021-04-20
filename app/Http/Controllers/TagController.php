@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index']); // Những user không login chỉ thực hiện được hàm index trong tất cả các hàm dưới đây.
         $this->middleware('admin')->except(['index']); // Những user không phải admin chỉ thực hiện được hàm index trong tất cả các hàm dưới đây.
     }
 

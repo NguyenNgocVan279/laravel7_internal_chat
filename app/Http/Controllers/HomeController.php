@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use App\HObby;
+use App\Hobby;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {

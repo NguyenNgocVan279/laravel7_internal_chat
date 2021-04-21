@@ -9,6 +9,13 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    // Hàm before sẽ ghi đè tất cả những gì được định nghĩa trong các hàm dưới đó, có nghĩa admin sẽ làm được tất cả mọi thứ!
+    public function before($user, $ability) {
+        if ($user->role === 'admin') {
+            return true; 
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -52,7 +59,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->id === $model->id; // nếu true thì có thể update, nếu false thì không thể!
     }
 
     /**
@@ -64,7 +71,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->id === $model->id; // nếu true thì có thể delete, nếu false thì không thể!
     }
 
     /**

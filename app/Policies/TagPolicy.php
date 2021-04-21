@@ -10,6 +10,13 @@ class TagPolicy
 {
     use HandlesAuthorization;
 
+    // Hàm before sẽ ghi đè tất cả những gì được định nghĩa trong các hàm dưới đó, có nghĩa admin sẽ làm được tất cả mọi thứ!
+    public function before($user, $ability) {
+        if ($user->role === 'admin') {
+            return true; 
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -30,7 +37,7 @@ class TagPolicy
      */
     public function view(User $user, Tag $tag)
     {
-        //
+        return false;
     }
 
     /**
@@ -41,7 +48,7 @@ class TagPolicy
      */
     public function create(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +60,7 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag)
     {
-        //
+        return false;
     }
 
     /**
@@ -65,7 +72,7 @@ class TagPolicy
      */
     public function delete(User $user, Tag $tag)
     {
-        //
+        return false;
     }
 
     /**
@@ -77,7 +84,7 @@ class TagPolicy
      */
     public function restore(User $user, Tag $tag)
     {
-        //
+        return false;
     }
 
     /**
@@ -89,6 +96,6 @@ class TagPolicy
      */
     public function forceDelete(User $user, Tag $tag)
     {
-        //
+        return false;
     }
 }
